@@ -1,0 +1,17 @@
+{
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "always",
+        "source.organizeImports": "always",
+        "source.fixAll.eslint": "always",
+        "source.fixAll.stylelint": "always",
+    },
+    "editor.formatOnSave": true,
+    "editor.autoClosingBrackets": "always",
+    "editor.bracketPairColorization.enabled": true,
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorStyle": "line",
+    "cSpell.words": [
+        "fypdashboard"
+    ]
+}
