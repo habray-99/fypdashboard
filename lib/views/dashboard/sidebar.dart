@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fypdashboard/models/sidebar_item.dart';
-import 'package:fypdashboard/views/dashboard/home_page.dart';
-import 'package:fypdashboard/views/dashboard/members.dart';
-import 'package:get/get.dart';
-
-import '../auth/log_out_page.dart';
+import 'package:fypdashboard/routes/route.dart';
 
 class Sidebar extends StatelessWidget {
   const Sidebar({super.key});
@@ -22,28 +18,53 @@ class Sidebar extends StatelessWidget {
           SidebarItem(
             title: 'Home',
             icon: Icons.home,
-            onTap: () => Get.to(() => const HomePage()),
+            onTap: () => Navigator.pushNamed(context, AppRoutes.homePage),
           ),
           const SidebarItem(
             title: 'Register Gym',
             icon: Icons.people,
-            // onTap: () => Get.toNamed('/members'),
+            // onTap: () => Navigator.pushNamed(context, '/members'),
           ),
           SidebarItem(
             title: 'Members',
             icon: Icons.people,
-            onTap: () => {Get.to(() => DataTablePage())},
+            onTap: () => Navigator.pushNamed(context, AppRoutes.dataTablePage),
           ),
           const SidebarItem(
             title: 'Gym Detail',
             icon: Icons.fitness_center,
-            // onTap: () => Get.toNamed('/gym-detail'),
+            // onTap: () => Navigator.pushNamed(context, '/gym-detail'),
           ),
           SidebarItem(
             title: 'Logout',
             icon: Icons.logout_outlined,
-            onTap: () => Get.to(() => const LogOutPage()),
+            onTap: () => Navigator.pushNamed(context, AppRoutes.logOutPage),
           ),
+          // SidebarItem(
+          //   title: 'Home',
+          //   icon: Icons.home,
+          //   onTap: () => Get.to(() => const HomePage()),
+          // ),
+          // const SidebarItem(
+          //   title: 'Register Gym',
+          //   icon: Icons.people,
+          //   // onTap: () => Get.toNamed('/members'),
+          // ),
+          // SidebarItem(
+          //   title: 'Members',
+          //   icon: Icons.people,
+          //   onTap: () => {Get.to(() => DataTablePage())},
+          // ),
+          // const SidebarItem(
+          //   title: 'Gym Detail',
+          //   icon: Icons.fitness_center,
+          //   // onTap: () => Get.toNamed('/gym-detail'),
+          // ),
+          // SidebarItem(
+          //   title: 'Logout',
+          //   icon: Icons.logout_outlined,
+          //   onTap: () => Get.to(() => const LogOutPage()),
+          // ),
           // Add more sidebar items here
         ],
       ),
