@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../models/gym.dart';
 
 class GymController {
   final key = GlobalKey<FormState>();
@@ -10,8 +13,11 @@ class GymController {
   final gymPhotos = TextEditingController();
   final gymPrice = TextEditingController();
   final userID = TextEditingController();
+  final gyms = <Gyms>[].obs;
 
   void onSubmit() {
-    if (key.currentState!.validate()) {}
+    if (key.currentState!.validate()) {
+
+    }
   }
 }
