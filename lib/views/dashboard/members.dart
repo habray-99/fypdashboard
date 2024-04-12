@@ -1,37 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:fypdashboard/views/dashboard/sidebar.dart';
+import 'package:get/get.dart';
 
-class DataTablePage extends StatefulWidget {
+import '../../controller/dashboard/gym_member_controller.dart';
+
+class DataTablePage extends StatelessWidget {
   const DataTablePage({super.key});
 
   @override
-  _DataTablePageState createState() => _DataTablePageState();
-}
-
-class _DataTablePageState extends State<DataTablePage> {
-  // Sample data
-  final List<Map<String, dynamic>> data = [
-    {'name': 'John Doe', 'age': 30, 'city': 'New York'},
-    {'name': 'Jane Doe', 'age': 25, 'city': 'Los Angeles'},
-    // Add more data as needed
-  ];
-
-  // This list will hold the filtered data
-  List<Map<String, dynamic>> filteredData = [];
-
-  @override
-  void initState() {
-    super.initState();
-    // Initialize filteredData with the original data
-    filteredData = List.from(data);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final MemberController memberController = Get.put(MemberController());
+
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Data Table with Search'),
-      // ),
       body: Row(
         children: [
           const Sidebar(),
@@ -42,15 +22,7 @@ class _DataTablePageState extends State<DataTablePage> {
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
                     onChanged: (value) {
-                      // Update the list based on the search input
-                      setState(() {
-                        filteredData = data
-                            .where((item) => item['name']
-                                .toString()
-                                .toLowerCase()
-                                .contains(value.toLowerCase()))
-                            .toList();
-                      });
+                      memberController.filterMembers(value);
                     },
                     decoration: const InputDecoration(
                       labelText: 'Search',
@@ -62,21 +34,74 @@ class _DataTablePageState extends State<DataTablePage> {
                   ),
                 ),
                 Expanded(
-                  child: SingleChildScrollView(
-                    child: DataTable(
-                      columns: const [
-                        DataColumn(label: Text('Name')),
-                        DataColumn(label: Text('Age')),
-                        DataColumn(label: Text('City')),
-                      ],
-                      rows: filteredData
-                          .map((item) => DataRow(cells: [
-                                DataCell(Text(item['name'].toString())),
-                                DataCell(Text(item['age'].toString())),
-                                DataCell(Text(item['city'].toString())),
-                              ]))
-                          .toList(),
-                    ),
+                  child: Obx(
+                    () => memberController.isLoading.value
+                        ? const Center(child: CircularProgressIndicator())
+                        : SingleChildScrollView(
+                            child: DataTable(
+                              columns: const [
+                                DataColumn(label: Text('ID')),
+                                DataColumn(label: Text('Name')),
+                                DataColumn(label: Text('Email')),
+                                DataColumn(label: Text('Phone')),
+                                DataColumn(label: Text('paymentDate')),
+                                DataColumn(label: Text('for months')),
+                                DataColumn(label: Text('till when')),
+                                DataColumn(label: Text('Membership')),
+                              ],
+                              rows: memberController.filteredMembers
+                                  .map((member) => DataRow(cells: [
+                                        DataCell(
+                                            Text(member.memberId!.toString())),
+                                        DataCell(Text(member.memberName!)),
+                                        DataCell(Text(member.memberEmail!)),
+                                        DataCell(Text(member.memberPhone!)),
+                                        DataCell(Text(member.paymentDate!)),
+                                        DataCell(
+                                            Text(member.months!.toString())),
+                                        DataCell(Text(member.tillwhen!)), // ),
+                                        DataCell(
+                                          member.isValid! == 1
+                                              ? Container(
+                                                  padding: const EdgeInsets.all(
+                                                      8.0), // Adjust padding as needed
+                                                  decoration: BoxDecoration(
+                                                    color:
+                                                        const Color(0xFFF5F5F5),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0), // Adjust borderRadius as needed
+                                                  ),
+                                                  child: const Text(
+                                                    'Active',
+                                                    style: TextStyle(
+                                                        color: Color(
+                                                            0xFFF5F5F5)), // Ensure text color contrasts with the background
+                                                  ),
+                                                )
+                                              : Container(
+                                                  padding: const EdgeInsets.all(
+                                                      8.0), // Adjust padding as needed
+                                                  decoration: BoxDecoration(
+                                                    color:
+                                                        Colors.pinkAccent[400],
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0), // Adjust borderRadius as needed
+                                                  ),
+                                                  child: Text(
+                                                    'Inactive',
+                                                    style: TextStyle(
+                                                        color: Colors
+                                                                .lightBlueAccent[
+                                                            50]), // Ensure text color contrasts with the background
+                                                  ),
+                                                ),
+                                        ),
+                                      ]))
+                                  .toList(),
+                            ),
+                          ),
                   ),
                 ),
               ],
