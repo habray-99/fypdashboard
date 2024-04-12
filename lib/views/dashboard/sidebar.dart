@@ -20,10 +20,10 @@ class Sidebar extends StatelessWidget {
             icon: Icons.home,
             onTap: () => Navigator.pushNamed(context, AppRoutes.homePage),
           ),
-          const SidebarItem(
-            title: 'Register Gym',
+          SidebarItem(
+            title: 'Gyms',
             icon: Icons.people,
-            // onTap: () => Navigator.pushNamed(context, '/members'),
+            onTap: () => Navigator.pushNamed(context, AppRoutes.gymPage),
           ),
           SidebarItem(
             title: 'Members',
@@ -35,11 +35,16 @@ class Sidebar extends StatelessWidget {
             icon: Icons.fitness_center,
             // onTap: () => Navigator.pushNamed(context, '/gym-detail'),
           ),
-          SidebarItem(
-            title: 'Logout',
-            icon: Icons.logout_outlined,
-            onTap: () => Navigator.pushNamed(context, AppRoutes.logOutPage),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 15.0),
+            child: SidebarItem(
+              title: 'Logout',
+              icon: Icons.logout_outlined,
+              onTap: () => Navigator.pushNamed(context, AppRoutes.logOutPage),
+            ),
           ),
+          // const SizedBox(height: 25),
           // SidebarItem(
           //   title: 'Home',
           //   icon: Icons.home,
