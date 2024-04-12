@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:fypdashboard/routes/route.dart';
 import 'package:fypdashboard/utils/colors.dart';
 import 'package:fypdashboard/views/auth/log_out_page.dart';
+import 'package:fypdashboard/views/dashboard/gym_page.dart';
 import 'package:fypdashboard/views/dashboard/home_page.dart';
 import 'package:fypdashboard/views/dashboard/members.dart';
+import 'package:fypdashboard/views/splash_screen.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -47,14 +49,18 @@ class MainApp extends StatelessWidget {
         ),
         GetPage(
           name: AppRoutes.dataTablePage,
-          page: () => DataTablePage(),
+          page: () => const DataTablePage(),
         ),
         GetPage(
           name: AppRoutes.logOutPage,
           page: () => const LogOutPage(),
         ),
+        GetPage(
+          name: AppRoutes.gymPage,
+          page: () => GymPage(),
+        ),
       ],
-      home: const HomePage(),
+      home: SplashScreen(),
     );
   }
 }
