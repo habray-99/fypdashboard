@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fypdashboard/controller/dashboard/gym_member_controller.dart';
 import 'package:fypdashboard/models/gym_member.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class AddMemberDialog extends StatefulWidget {
   const AddMemberDialog({super.key});
@@ -17,8 +18,6 @@ class _AddMemberDialogState extends State<AddMemberDialog> {
   final _memberPhoneController = TextEditingController();
   final _memberAddressController = TextEditingController();
   final _memberMonthsController = TextEditingController();
-  final _memberPaymentDateController =
-      TextEditingController(text: DateTime.now().toString());
   final _memberTempPasswordController = TextEditingController();
 
   final MemberController _controller = Get.find();
@@ -36,6 +35,7 @@ class _AddMemberDialogState extends State<AddMemberDialog> {
               controller: _memberNameController,
               decoration: const InputDecoration(
                 labelText: 'Name',
+                prefixIcon: Icon(Icons.person),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -48,6 +48,7 @@ class _AddMemberDialogState extends State<AddMemberDialog> {
               controller: _memberEmailController,
               decoration: const InputDecoration(
                 labelText: 'Email',
+                prefixIcon: Icon(Icons.email),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -60,6 +61,7 @@ class _AddMemberDialogState extends State<AddMemberDialog> {
               controller: _memberPhoneController,
               decoration: const InputDecoration(
                 labelText: 'Phone',
+                prefixIcon: Icon(Icons.phone),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -72,6 +74,7 @@ class _AddMemberDialogState extends State<AddMemberDialog> {
               controller: _memberAddressController,
               decoration: const InputDecoration(
                 labelText: 'Address',
+                prefixIcon: Icon(Icons.location_on),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -84,6 +87,7 @@ class _AddMemberDialogState extends State<AddMemberDialog> {
               controller: _memberTempPasswordController,
               decoration: const InputDecoration(
                 labelText: 'Temporary Password',
+                prefixIcon: Icon(Icons.lock),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -96,6 +100,7 @@ class _AddMemberDialogState extends State<AddMemberDialog> {
               controller: _memberMonthsController,
               decoration: const InputDecoration(
                 labelText: 'Number of month(s)',
+                prefixIcon: Icon(Icons.calendar_today),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -105,28 +110,25 @@ class _AddMemberDialogState extends State<AddMemberDialog> {
               },
             ),
             TextFormField(
-              controller: _memberPaymentDateController,
               decoration: const InputDecoration(
-                labelText: 'Starting from',
+                labelText: 'Select Date',
+                prefixIcon: Icon(Icons.calendar_today),
               ),
+              controller: TextEditingController(
+                  text: DateFormat('yyyy-MM-dd')
+                      .format(_controller.selectedDate.value)),
               readOnly: true,
               onTap: () async {
                 final DateTime? picked = await showDatePicker(
                   context: context,
-                  initialDate: DateTime.now(),
+                  initialDate: _controller.selectedDate.value,
                   firstDate: DateTime(2000),
                   lastDate: DateTime(2100),
                 );
                 if (picked != null &&
-                    picked != _memberPaymentDateController.value) {
-                  _memberPaymentDateController.value = picked;
+                    picked != _controller.selectedDate.value) {
+                  _controller.selectedDate.value = picked;
                 }
-              },
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter an date';
-                }
-                return null;
               },
             ),
           ],
@@ -149,7 +151,8 @@ class _AddMemberDialogState extends State<AddMemberDialog> {
                 memberPhone: _memberPhoneController.text,
                 memberAddress: _memberAddressController.text,
                 months: int.tryParse(_memberMonthsController.text),
-                paymentDate: _memberPaymentDateController.text,
+                fromWhen: DateFormat('yyyy-MM-dd')
+                    .format(_controller.selectedDate.value),
                 memberPassword: _memberTempPasswordController.text,
               );
               _controller.addMember(member);
