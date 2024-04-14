@@ -28,7 +28,7 @@ class Sidebar extends StatelessWidget {
           SidebarItem(
             title: 'Members',
             icon: Icons.people,
-            onTap: () => Navigator.pushNamed(context, AppRoutes.dataTablePage),
+            onTap: () => Navigator.pushNamed(context, AppRoutes.memberTable),
           ),
           const SidebarItem(
             title: 'Gym Detail',
