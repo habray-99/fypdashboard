@@ -5,7 +5,7 @@ class UserDetail {
   String? memberPhone;
   String? memberAddress;
   int? memberType;
-  Null? memberImageUrl;
+  Null memberImageUrl;
 
   UserDetail(
       {this.memberId,
