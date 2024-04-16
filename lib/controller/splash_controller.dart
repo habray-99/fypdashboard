@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:fypdashboard/controller/core_controller.dart';
-import 'package:fypdashboard/views/dashboard/home_page.dart';
+
 import 'package:get/get.dart';
 
 import '../views/auth/login_page.dart';
+import '../views/dashboard/gymowner/home_page.dart';
 
 class SplashScreenController extends GetxController {
   final c = Get.put(CoreController());
