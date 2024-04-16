@@ -1,23 +1,75 @@
 import 'dart:developer';
 
 import 'package:fypdashboard/controller/dashboard/gym_page_controller.dart';
-import 'package:fypdashboard/models/user_details.dart';
 import 'package:get/get.dart';
 
 import '../../models/gym_member.dart';
 import '../../repo/gym_repo.dart';
 import '../../utils/custom_snackbar.dart';
+import '../../utils/storage_keys.dart';
 
 class MemberController extends GetxController {
   var memberList = RxList<GymMember>();
   var filteredMembers = RxList<GymMember>();
   var isLoading = true.obs;
   bool isSortedAscending = true;
+  var selectedDate = DateTime.now().obs;
 
   @override
   void onInit() {
-    fetchMembers();
+    if (StorageHelper.getUserType() == 0) {
+      fetchAllMembers();
+    } else {
+      fetchMembers();
+    }
     super.onInit();
+  }
+
+  Future<void> fetchAllMembers() async {
+    // try {
+    //   isLoading(true);
+    //   var headers = {
+    //     "Accept": "application/json",
+    //     "Content-Type": "application/json",
+    //   };
+    //   http.Response response = await http.get(
+    //     Uri.parse(Apis.allMembers),
+    //     headers: headers,
+    //   );
+
+    //   dynamic data = json.decode(response.body);
+    //   log(data.toString());
+    //   if (response.statusCode == 200 && response.statusCode < 300) {
+    //     List<GymMember> members = gymMembersFromJson(data["users"]);
+    //     // onSuccess(gyms);
+    //     memberList.assignAll(members);
+    //     filteredMembers.assignAll(members);
+    //     CustomSnackBar.success(
+    //       title: "Success",
+    //       message: "Members fetched successfully",
+    //     );
+    //   } else {
+    //     // onError(data['message']);
+    //     CustomSnackBar.error(title: "Error", message: "Failed to load members");
+    //   }
+    // } catch (e) {
+    //   log(e.toString());
+    //   // onError("Something went wrong");
+    //   CustomSnackBar.error(title: "Error", message: "Failed to load members");
+    // } finally {
+    //   isLoading(false);
+    // }
+    try {
+      isLoading(true);
+      await GetGymMembersRepo.getAllGymMembers(onSuccess: (members) {
+        memberList.assignAll(members);
+        filteredMembers.assignAll(members);
+      }, onError: (message) {
+        CustomSnackBar.error(message: message, title: "Error");
+      });
+    } catch (e) {
+      CustomSnackBar.error(message: e.toString(), title: "Error");
+    }
   }
 
   void fetchMembers() async {
