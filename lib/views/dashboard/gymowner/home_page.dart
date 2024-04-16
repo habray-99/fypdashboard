@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(16),
               child: const Center(
-                child: Text('Main Content Area'),
+                child: Text('Owner Content Area'),
               ),
             ),
           ),
