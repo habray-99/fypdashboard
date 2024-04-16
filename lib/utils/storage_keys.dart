@@ -54,4 +54,18 @@ class StorageHelper {
       return null;
     }
   }
+  static getUserType(){
+    log("Fetching user type");
+    try {
+      final box = GetStorage();
+      // log("${box.read(StorageKeys.USER)}");
+      UserDetail user =
+          UserDetail.fromJson(json.decode(box.read(StorageKeys.USER)));
+      return user.memberType;
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
+      return null;
+    }
+  }
 }
