@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:fypdashboard/routes/route.dart';
 import 'package:fypdashboard/utils/colors.dart';
 import 'package:fypdashboard/views/auth/log_out_page.dart';
-import 'package:fypdashboard/views/dashboard/gym_page.dart';
-import 'package:fypdashboard/views/dashboard/home_page.dart';
-import 'package:fypdashboard/views/dashboard/members.dart';
+
 import 'package:fypdashboard/views/splash_screen.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'controller/core_controller.dart';
+import 'views/dashboard/gymowner/gym_page.dart';
+import 'views/dashboard/gymowner/home_page.dart';
+import 'views/dashboard/gymowner/members.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,18 +39,22 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.secondaryColor),
         useMaterial3: true,
+        textTheme: GoogleFonts.sourceSans3TextTheme(
+          Theme.of(context).textTheme,
+        ),
       ),
       initialBinding: BindingsBuilder(() {
         Get.put(CoreController());
       }),
       // home: SplashScreen(),
       getPages: [
+        
         GetPage(
           name: AppRoutes.homePage,
           page: () => const HomePage(),
         ),
         GetPage(
-          name: AppRoutes.dataTablePage,
+          name: AppRoutes.memberTable,
           page: () => const DataTablePage(),
         ),
         GetPage(
