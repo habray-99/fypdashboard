@@ -46,6 +46,31 @@ class GetGymMembersRepo {
     }
   }
 
+  static Future<void> getAllGymMembers({
+    required Function(List<GymMember> exerciseRecommendation) onSuccess,
+    required Function(String message) onError,
+  }) async {
+    try {
+      var header = {
+        "Accept": "application/json",
+      };
+      var response =
+          await http.get(Uri.parse(Apis.allMembers), headers: header);
+      dynamic data = jsonDecode(response.body);
+      if (response.statusCode >= 200 &&
+          data['message'] == "Users fetched successfully") {
+        List<GymMember> members = gymMembersFromJson(data["users"]);
+        onSuccess(members);
+      } else {
+        onError(data["message"].toString());
+      }
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
+      onError("Something went wrong.");
+    }
+  }
+
   static Future<void> addGymMember(
       {required GymMember member,
       required Function(dynamic message) onSuccess,
