@@ -12,6 +12,7 @@
                 "build",
                 "web",
                 "--web-renderer",
+                // "html",
                 "canvaskit",
                 "--enable-impeller"
             ],

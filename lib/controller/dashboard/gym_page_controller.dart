@@ -13,12 +13,47 @@ import 'package:mime/mime.dart'; // Import this package
 class GymPageController extends GetxController {
   @override
   void onInit() {
-    fetchGyms();
+    if (StorageHelper.getUserType() == 0) {
+      fetchAllGyms();
+    } else {
+      fetchGyms();
+    }
     super.onInit();
   }
 
   // Define a list to store gyms
   RxList<Gyms> gyms = <Gyms>[].obs;
+  var filteredGymList = RxList<Gyms>();
+
+  void filterGyms(String searchText) {
+    String lowerCaseSearchText = searchText.toLowerCase().trim();
+    filteredGymList.value = gyms
+        .where((Gyms) =>
+            (Gyms.gymName?.toLowerCase().contains(lowerCaseSearchText) ??
+                false) ||
+            (Gyms.gymEmail?.toLowerCase().contains(lowerCaseSearchText) ??
+                false) ||
+            (Gyms.gymAddress?.toLowerCase().contains(lowerCaseSearchText) ??
+                false) ||
+            (Gyms.gymPhone?.toLowerCase().contains(lowerCaseSearchText) ??
+                false))
+        .toList();
+  }
+
+  Future<void> fetchAllGyms() async {
+    try {
+      final response = await http.get(Uri.parse(Apis.allGyms));
+      if (response.statusCode == 200) {
+        List<Gyms> responseData = jsonDecode(response.body)['gyms'];
+        gyms.value = gymDetailListFromJson(responseData);
+        filteredGymList.assignAll(gyms);
+      } else {
+        throw Exception('Failed to load gyms');
+      }
+    } catch (e) {
+      log('Error: $e');
+    }
+  }
 
   // Function to fetch gyms from API
   Future<void> fetchGyms() async {
@@ -37,6 +72,8 @@ class GymPageController extends GetxController {
           List<dynamic> responseData = jsonDecode(response.body)['gyms'];
           // Convert the response data into list of Gyms objects
           gyms.value = gymDetailListFromJson(responseData);
+          // gyms.value = gymDetailListFromJson(responseData);
+          filteredGymList.assignAll(gyms);
         } else {
           throw Exception('Failed to load gyms');
         }
