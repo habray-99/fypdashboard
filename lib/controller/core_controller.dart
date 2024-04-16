@@ -25,24 +25,6 @@ class CoreController extends GetxController {
     log("current user----------------------- ${currentUser.value?.memberEmail}-");
     log("current user token----------------------- ${userToken.value}-");
   }
-  // Future<void> loadCurrentUser() async {
-  //   final user = StorageHelper.getUser();
-  //   if (user != null) {
-  //       currentUser.value = user;
-  //   } else {
-  //       currentUser.value = UserDetail(); // Provide a default value
-  //   }
-
-//     final token = StorageHelper.getToken();
-//     if (token != null) {
-//         userToken.value = token;
-//     } else {
-//         userToken.value = ""; // Provide a default value
-//     }
-
-//     log("current user----------------------- ${currentUser.value?.email}-");
-//     log("current user token----------------------- ${userToken.value}-");
-// }
 
   bool isUserLoggedIn() {
     return currentUser.value != null;
