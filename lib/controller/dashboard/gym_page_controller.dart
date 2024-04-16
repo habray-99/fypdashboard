@@ -44,8 +44,11 @@ class GymPageController extends GetxController {
     try {
       final response = await http.get(Uri.parse(Apis.allGyms));
       if (response.statusCode == 200) {
-        List<Gyms> responseData = jsonDecode(response.body)['gyms'];
-        gyms.value = gymDetailListFromJson(responseData);
+        // List<Gyms> responseData = jsonDecode(response.body)['gyms'];
+        dynamic data = json.decode(response.body);
+        List<Gyms> gymS = gymDetailListFromJson(data["gyms"]);
+        // gyms.value = gymDetailListFromJson(gyms);
+        gyms.assignAll(gymS);
         filteredGymList.assignAll(gyms);
       } else {
         throw Exception('Failed to load gyms');
