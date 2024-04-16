@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fypdashboard/routes/route.dart';
 import 'package:fypdashboard/utils/colors.dart';
 import 'package:fypdashboard/views/auth/log_out_page.dart';
-
+import 'package:fypdashboard/views/dashboard/admin/admin_home_page.dart';
+import 'package:fypdashboard/views/dashboard/admin/gym_page.dart';
+import 'package:fypdashboard/views/dashboard/admin/members.dart';
 import 'package:fypdashboard/views/splash_screen.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -48,7 +50,6 @@ class MainApp extends StatelessWidget {
       }),
       // home: SplashScreen(),
       getPages: [
-        
         GetPage(
           name: AppRoutes.homePage,
           page: () => const HomePage(),
@@ -65,6 +66,10 @@ class MainApp extends StatelessWidget {
           name: AppRoutes.gymPage,
           page: () => GymPage(),
         ),
+        GetPage(name: AppRoutes.adminHome, page: () => const AdminHomePage()),
+        GetPage(name: AppRoutes.adminGyms, page: () => AdminGymPage()),
+        GetPage(name: AppRoutes.adminMembers, page: () => const AdminMembers()),
+        // GetPage(name: AppRoutes.adminPayments, page: () => ),
       ],
       home: SplashScreen(),
     );
