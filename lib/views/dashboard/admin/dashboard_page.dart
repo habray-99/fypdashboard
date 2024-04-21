@@ -49,10 +49,42 @@ class DashboardPage extends StatelessWidget {
                       const SizedBox(height: 8),
                       SizedBox(
                         height: 300,
-                        child: BarChart(
-                          BarChartData(
-                            barGroups: _createChartData(
-                              controller.dashboardData['12_month_history'],
+                        child: LineChart(
+                          LineChartData(
+                            lineBarsData: [
+                              LineChartBarData(
+                                spots: _createChartData(
+                                  controller.dashboardData['12_month_history'],
+                                ),
+                                isCurved: true,
+                                color: Colors.blue,
+                                barWidth: 3,
+                                isStrokeCapRound: true,
+                                dotData: const FlDotData(
+                                  show: false,
+                                ),
+                                belowBarData: BarAreaData(
+                                  show: true,
+                                  color: Colors.blue.withOpacity(0.2),
+                                ),
+                              ),
+                            ],
+                            titlesData: FlTitlesData(
+                              bottomTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                                  showTitles: true,
+                                  getTitlesWidget: (value, meta) {
+                                    final monthlyData = controller
+                                        .dashboardData['12_month_history'];
+                                    if (value.toInt() >= 0 &&
+                                        value.toInt() < monthlyData.length) {
+                                      return Text(
+                                          monthlyData[value.toInt()]['month']);
+                                    }
+                                    return const Text('');
+                                  },
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -101,32 +133,14 @@ class DashboardPage extends StatelessWidget {
     );
   }
 
-  List<BarChartGroupData> _createChartData(List<dynamic> monthlyData) {
-    return monthlyData.map((item) {
-      final monthStr = item['month'].toString().substring(5, 7);
-      final month = int.tryParse(monthStr);
-      if (month != null) {
-        return BarChartGroupData(
-          x: month,
-          barRods: [
-            BarChartRodData(
-              toY: double.parse(item['total_memberships_sold']),
-              color: Colors.blue,
-            ),
-          ],
-        );
-      } else {
-        // Handle invalid month format
-        return BarChartGroupData(
-          x: 0,
-          barRods: [
-            BarChartRodData(
-              toY: 0,
-              color: Colors.blue,
-            ),
-          ],
-        );
-      }
+  List<FlSpot> _createChartData(List<dynamic> monthlyData) {
+    return monthlyData.asMap().entries.map((entry) {
+      final index = entry.key;
+      final item = entry.value;
+      return FlSpot(
+        index.toDouble(),
+        double.parse(item['total_memberships_sold']),
+      );
     }).toList();
   }
 }
