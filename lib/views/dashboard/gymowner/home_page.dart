@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fypdashboard/views/dashboard/report_generation.dart';
 import 'package:fypdashboard/views/dashboard/sidebar.dart';
 
 class HomePage extends StatelessWidget {
@@ -6,18 +7,20 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Row(
         children: [
-          const Sidebar(),
+          Sidebar(),
           Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              child: const Center(
-                child: Text('Owner Content Area'),
-              ),
+            // child: Container(
+            // padding: const EdgeInsets.all(16),
+            child: Padding(
+              padding: EdgeInsets.all(18.0),
+              // child: ReportPage(),
+              child: BarChartSample(),
             ),
           ),
+          // )
         ],
       ),
     );

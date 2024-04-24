@@ -1,7 +1,7 @@
 {
     "name": "fypdashboard",
     "short_name": "fypdashboard",
-    "start_url": ".",
+    "start_url": "fypdashboard",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",

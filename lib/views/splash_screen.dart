@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-import 'package:fypdashboard/utils/image_paths.dart';
 import 'package:get/get.dart';
 
 import '../controller/splash_controller.dart';
@@ -18,15 +16,17 @@ class SplashScreen extends StatelessWidget {
             child: SizedBox(
               child: Image(
                 image: AssetImage(
-                  ImagePath.loginBackGround,
-                  // ImagePath.splashLogo,
-                ),
+                    // ImagePath.splashLogo,
+                    'images/output-onlinepngtools.png'
+                    // ImagePath.splashLogo,
+                    ),
                 height: 200,
-                width:200,
+                width: 200,
+                color: Colors.black38,
               ),
             ),
           ),
-          CircularProgressIndicator()
+          Center(child: CircularProgressIndicator())
         ],
       ),
     );

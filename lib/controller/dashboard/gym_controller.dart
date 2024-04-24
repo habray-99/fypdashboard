@@ -5,6 +5,7 @@ import '../../models/gym.dart';
 
 class GymController {
   final key = GlobalKey<FormState>();
+  // final key = ;
   final gymId = TextEditingController();
   final gymName = TextEditingController();
   final gymAddress = TextEditingController();

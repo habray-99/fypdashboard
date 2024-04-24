@@ -23,6 +23,11 @@ class DashboardPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const Text(
+                        "Welcome Admin",
+                        style: TextStyle(fontSize: 28),
+                      ),
+                      const SizedBox(height: 16),
                       Container(
                         padding: const EdgeInsets.all(16.0),
                         decoration: BoxDecoration(
@@ -39,56 +44,56 @@ class DashboardPage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 16),
-                      const Text(
-                        '12 Month History',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      SizedBox(
-                        height: 300,
-                        child: LineChart(
-                          LineChartData(
-                            lineBarsData: [
-                              LineChartBarData(
-                                spots: _createChartData(
-                                  controller.dashboardData['12_month_history'],
-                                ),
-                                isCurved: true,
-                                color: Colors.blue,
-                                barWidth: 3,
-                                isStrokeCapRound: true,
-                                dotData: const FlDotData(
-                                  show: false,
-                                ),
-                                belowBarData: BarAreaData(
-                                  show: true,
-                                  color: Colors.blue.withOpacity(0.2),
-                                ),
-                              ),
-                            ],
-                            titlesData: FlTitlesData(
-                              bottomTitles: AxisTitles(
-                                sideTitles: SideTitles(
-                                  showTitles: true,
-                                  getTitlesWidget: (value, meta) {
-                                    final monthlyData = controller
-                                        .dashboardData['12_month_history'];
-                                    if (value.toInt() >= 0 &&
-                                        value.toInt() < monthlyData.length) {
-                                      return Text(
-                                          monthlyData[value.toInt()]['month']);
-                                    }
-                                    return const Text('');
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // const Text(
+                      //   '12 Month History',
+                      //   style: TextStyle(
+                      //     fontSize: 18,
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      // const SizedBox(height: 8),
+                      // SizedBox(
+                      //   height: 300,
+                      //   child: LineChart(
+                      //     LineChartData(
+                      //       lineBarsData: [
+                      //         LineChartBarData(
+                      //           spots: _createChartData(
+                      //             controller.dashboardData['12_month_history'],
+                      //           ),
+                      //           isCurved: true,
+                      //           color: Colors.blue,
+                      //           barWidth: 3,
+                      //           isStrokeCapRound: true,
+                      //           dotData: const FlDotData(
+                      //             show: false,
+                      //           ),
+                      //           belowBarData: BarAreaData(
+                      //             show: true,
+                      //             color: Colors.blue.withOpacity(0.2),
+                      //           ),
+                      //         ),
+                      //       ],
+                      //       titlesData: FlTitlesData(
+                      //         bottomTitles: AxisTitles(
+                      //           sideTitles: SideTitles(
+                      //             showTitles: true,
+                      //             getTitlesWidget: (value, meta) {
+                      //               final monthlyData = controller
+                      //                   .dashboardData['12_month_history'];
+                      //               if (value.toInt() >= 0 &&
+                      //                   value.toInt() < monthlyData.length) {
+                      //                 return Text(
+                      //                     monthlyData[value.toInt()]['month']);
+                      //               }
+                      //               return const Text('');
+                      //             },
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       const SizedBox(height: 16),
                       const Text(
                         'Recent Payments',

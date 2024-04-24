@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:fypdashboard/controller/dashboard/gym_page_controller.dart';
 import 'package:get/get.dart';
 
@@ -12,7 +10,7 @@ class MemberController extends GetxController {
   var memberList = RxList<GymMember>();
   var filteredMembers = RxList<GymMember>();
   var isLoading = true.obs;
-  bool isSortedAscending = true;
+  var isSortedAscending = true.obs;
   var selectedDate = DateTime.now().obs;
 
   @override
@@ -26,44 +24,14 @@ class MemberController extends GetxController {
   }
 
   Future<void> fetchAllMembers() async {
-    // try {
-    //   isLoading(true);
-    //   var headers = {
-    //     "Accept": "application/json",
-    //     "Content-Type": "application/json",
-    //   };
-    //   http.Response response = await http.get(
-    //     Uri.parse(Apis.allMembers),
-    //     headers: headers,
-    //   );
-
-    //   dynamic data = json.decode(response.body);
-    //   log(data.toString());
-    //   if (response.statusCode == 200 && response.statusCode < 300) {
-    //     List<GymMember> members = gymMembersFromJson(data["users"]);
-    //     // onSuccess(gyms);
-    //     memberList.assignAll(members);
-    //     filteredMembers.assignAll(members);
-    //     CustomSnackBar.success(
-    //       title: "Success",
-    //       message: "Members fetched successfully",
-    //     );
-    //   } else {
-    //     // onError(data['message']);
-    //     CustomSnackBar.error(title: "Error", message: "Failed to load members");
-    //   }
-    // } catch (e) {
-    //   log(e.toString());
-    //   // onError("Something went wrong");
-    //   CustomSnackBar.error(title: "Error", message: "Failed to load members");
-    // } finally {
-    //   isLoading(false);
-    // }
     try {
       isLoading(true);
       await GetGymMembersRepo.getAllGymMembers(onSuccess: (members) {
         memberList.assignAll(members);
         filteredMembers.assignAll(members);
+        isLoading(false);
+        CustomSnackBar.success(
+            message: "Members fetched successfully", title: "Success");
       }, onError: (message) {
         CustomSnackBar.error(message: message, title: "Error");
       });
@@ -72,35 +40,48 @@ class MemberController extends GetxController {
     }
   }
 
+  bool hasError = false;
+
   void fetchMembers() async {
     try {
       isLoading(true);
       var gymPageController = Get.put(GymPageController());
       await gymPageController.fetchGyms();
       var gymIds = gymPageController.gyms.map((gym) => gym.gymId).toList();
-
-      List<GymMember> allMembers = [];
-
+      Set<GymMember> allMembers = {};
       for (var gymId in gymIds) {
         await GetGymMembersRepo.getGymMembers(
-          gymId: gymId.toString(),
+          gymId: gymId,
           onSuccess: (members) {
             allMembers.addAll(members);
+            // CustomSnackBar.success(
+            //   message: "Members fetched successfully",
+            //   title: "Success",
+            // );
           },
           onError: (message) {
-            log("Error fetching members for gymId $gymId: $message");
-            CustomSnackBar.error(message: message, title: "Error");
+            // log("Error fetching members for gymId $gymId: $message");
+            // CustomSnackBar.error(message: message, title: "Error");
+            hasError = true;
           },
         );
       }
 
       memberList.assignAll(allMembers);
       filteredMembers.assignAll(allMembers);
+      sortMembers();
       // memberList.value = allMembers;
-      CustomSnackBar.success(
-        message: "Members fetched successfully",
-        title: "Success",
-      );
+      if (hasError == false) {
+        CustomSnackBar.success(
+          message: "Members fetched successfully",
+          title: "Success",
+        );
+      } else {
+        CustomSnackBar.error(
+          message: "Failed to load all members",
+          title: "Error",
+        );
+      }
     } finally {
       isLoading(false);
     }
@@ -120,16 +101,16 @@ class MemberController extends GetxController {
   }
 
   void toggleSortOrder() {
-    isSortedAscending = !isSortedAscending;
+    isSortedAscending.value = !isSortedAscending.value;
     sortMembers();
   }
 
   void sortMembers() {
     filteredMembers.sort((a, b) {
-      int aIsValid = a.isValid ?? 0;
-      int bIsValid = b.isValid ?? 0;
+      int aIsValid = a.memberId ?? 0;
+      int bIsValid = b.memberId ?? 0;
 
-      if (isSortedAscending) {
+      if (isSortedAscending.value) {
         return bIsValid.compareTo(aIsValid);
       } else {
         return aIsValid.compareTo(bIsValid);

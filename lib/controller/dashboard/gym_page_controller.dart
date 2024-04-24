@@ -72,10 +72,14 @@ class GymPageController extends GetxController {
 
         if (response.statusCode == 200) {
           // If server returns success, parse the response
-          List<dynamic> responseData = jsonDecode(response.body)['gyms'];
+          // List<dynamic> responseData = jsonDecode(response.body)['gyms'];
           // Convert the response data into list of Gyms objects
-          gyms.value = gymDetailListFromJson(responseData);
           // gyms.value = gymDetailListFromJson(responseData);
+          // gyms.value = gymDetailListFromJson(responseData);
+          dynamic data = json.decode(response.body);
+          List<Gyms> gymS = gymDetailListFromJson(data["gyms"]);
+          // gyms.value = gymDetailListFromJson(gyms);
+          gyms.assignAll(gymS);
           filteredGymList.assignAll(gyms);
         } else {
           throw Exception('Failed to load gyms');

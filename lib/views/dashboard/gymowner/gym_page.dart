@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 
 import '../../../controller/dashboard/gym_page_controller.dart';
 
-
 class GymPage extends StatelessWidget {
   final GymPageController controller = Get.put(GymPageController());
   final TextEditingController _searchController = TextEditingController();
@@ -30,6 +29,9 @@ class GymPage extends StatelessWidget {
                         children: [
                           Expanded(
                             child: TextField(
+                              onChanged: (value) {
+                                controller.filterGyms(value);
+                              },
                               controller: _searchController,
                               decoration: const InputDecoration(
                                 hintText: 'Search Gyms',
@@ -78,11 +80,7 @@ class GymPage extends StatelessWidget {
                                 DataColumn(label: Text('Photo')),
                                 DataColumn(label: Text('Actions')),
                               ],
-                              rows: controller.gyms
-                                  .where((gym) => gym.gymName!
-                                      .toLowerCase()
-                                      .contains(
-                                          _searchController.text.toLowerCase()))
+                              rows: controller.filteredGymList
                                   .map(
                                     (gym) => DataRow(
                                       cells: [
@@ -100,9 +98,9 @@ class GymPage extends StatelessWidget {
                                                   gym.gymPhotos!,
                                                   // width: Get.width * .2,
                                                 )
-                                              : SizedBox(
+                                              : const SizedBox(
                                                   // width: Get.width * .2,
-                                                ),
+                                                  ),
                                         ),
                                         DataCell(
                                           Row(

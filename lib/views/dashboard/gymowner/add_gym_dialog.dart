@@ -16,7 +16,7 @@ class AddGymDialog extends StatefulWidget {
 
 class _AddGymDialogState extends State<AddGymDialog> {
   final GymPageController _controller = Get.find();
-  final _formKey = GlobalKey<FormState>();
+  final _formKey5 = GlobalKey<FormState>();
 
   final _gymNameController = TextEditingController();
   final _gymAddressController = TextEditingController();
@@ -45,7 +45,7 @@ class _AddGymDialogState extends State<AddGymDialog> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(
-            key: _formKey,
+            key: _formKey5,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -125,7 +125,7 @@ class _AddGymDialogState extends State<AddGymDialog> {
                 const SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {
+                    if (_formKey5.currentState!.validate()) {
                       final gym = Gyms(
                         gymName: _gymNameController.text,
                         gymAddress: _gymAddressController.text,

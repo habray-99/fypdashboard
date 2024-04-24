@@ -1,15 +1,18 @@
 name: fypdashboard
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.3.0 <4.0.0'
+  sdk: ">=3.3.0 <4.0.0"
 
 dependencies:
   cached_network_image: ^3.3.1
+  fl_chart: ^0.67.0
   flutter:
     sdk: flutter
+  flutter_charts: ^0.5.2
+  flutter_launcher_icons: ^0.13.1
   flutter_svg: ^2.0.10+1
   get: ^4.6.6
   get_storage: ^2.1.1
@@ -31,3 +34,26 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+assets:
+  - assets/images/
+  - assets/icons/
+  - assets/fonts/
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/output-onlinepngtools.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/images/output-onlinepngtools.png"
+    # background_color: "#hexcode"
+    # theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/images/output-onlinepngtools.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/images/output-onlinepngtools.png"

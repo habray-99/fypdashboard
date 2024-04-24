@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../../utils/validators.dart';
 import '../../widgets/custom/custom_elevated_button.dart';
-import '../dashboard/home_page.dart';
+import '../dashboard/gymowner//home_page.dart';
 
 class LogInScreen extends StatefulWidget {
   static const String routeName = "/loginScreen";
@@ -34,6 +34,13 @@ class _LogInScreenState extends State<LogInScreen> {
                   // const SizedBox(
                   //   height: 20,
                   // ),
+                  const Center(
+                    child: Image(
+                      image: AssetImage('/images/output-onlinepngtools.png'),
+                      height: 200,
+                      width: 200,
+                    ),
+                  ),
                   _gymImgAndGreet(),
                   Form(
                     key: c.key,
@@ -46,7 +53,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       ],
                     ),
                   ),
-                  _signUp(),
+                  // _signUp(),
                 ],
               ),
             ),

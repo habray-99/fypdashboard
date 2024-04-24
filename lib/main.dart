@@ -5,6 +5,7 @@ import 'package:fypdashboard/views/auth/log_out_page.dart';
 import 'package:fypdashboard/views/dashboard/admin/admin_home_page.dart';
 import 'package:fypdashboard/views/dashboard/admin/gym_page.dart';
 import 'package:fypdashboard/views/dashboard/admin/members.dart';
+import 'package:fypdashboard/views/dashboard/admin/payments_page.dart';
 import 'package:fypdashboard/views/splash_screen.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -66,10 +67,13 @@ class MainApp extends StatelessWidget {
           name: AppRoutes.gymPage,
           page: () => GymPage(),
         ),
+        GetPage(name: AppRoutes.payments, page: () => const AdminPayments()),
         GetPage(name: AppRoutes.adminHome, page: () => const AdminHomePage()),
         GetPage(name: AppRoutes.adminGyms, page: () => AdminGymPage()),
-        GetPage(name: AppRoutes.adminMembers, page: () => const AdminMembers()),
-        // GetPage(name: AppRoutes.adminPayments, page: () => ),
+        // GetPage(name: AppRoutes.adminMembers, page: () => const AdminMembers()),
+        GetPage(name: AppRoutes.adminMembers, page: () => AdminDataTablePage()),
+        GetPage(
+            name: AppRoutes.adminPayments, page: () => const AdminPayments()),
       ],
       home: SplashScreen(),
     );

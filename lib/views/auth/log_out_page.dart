@@ -14,13 +14,29 @@ class LogOutPage extends StatelessWidget {
         children: [
           const Sidebar(),
           Expanded(
-            child: Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  Get.find<CoreController>().logOut();
-                },
-                child: const Text('Log Out'),
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * .1),
+                const Padding(
+                  padding: EdgeInsets.only(left: 15.0),
+                  child: Text("Are you sure you want to log out?",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      )),
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * .1),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Get.find<CoreController>().logOut();
+                    },
+                    child: const Text('Log Out'),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

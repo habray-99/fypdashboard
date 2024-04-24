@@ -5,6 +5,7 @@ class GymMember {
   int? gymId;
   int? months;
   String? tillwhen;
+  String? fromWhen;
   int? isValid;
   String? memberName;
   String? memberEmail;
@@ -15,6 +16,13 @@ class GymMember {
   String? memberWeight;
   int? memberType;
   Null memberImageUrl;
+  String? gymName;
+  String? gymAddress;
+  String? gymPhone;
+  String? gymEmail;
+  String? gymPhotos;
+  int? gymPrice;
+  int? ownerId;
 
   GymMember(
       {this.paymentId,
@@ -32,7 +40,15 @@ class GymMember {
       this.memberWeight,
       this.memberType,
       this.memberPassword,
-      this.memberImageUrl});
+      this.fromWhen,
+      this.memberImageUrl,
+      this.gymName,
+      this.gymAddress,
+      this.gymPhone,
+      this.gymEmail,
+      this.gymPhotos,
+      this.gymPrice,
+      this.ownerId});
 
   GymMember.fromJson(Map<String, dynamic> json) {
     paymentId = json['payment_id'];
@@ -50,6 +66,13 @@ class GymMember {
     memberWeight = json['member_weight'];
     memberType = json['member_type'];
     memberImageUrl = json['member_image_url'];
+    gymName = json['gym_name'];
+    gymAddress = json['gym_address'];
+    gymPhone = json['gym_phone'];
+    gymEmail = json['gym_email'];
+    gymPhotos = json['gym_photos'];
+    gymPrice = json['gym_price'];
+    ownerId = json['owner_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -69,6 +92,15 @@ class GymMember {
     data['member_weight'] = memberWeight;
     data['member_type'] = memberType;
     data['member_image_url'] = memberImageUrl;
+    data['fromWhen'] = fromWhen;
+    data['member_image_url'] = memberImageUrl;
+    data['gym_name'] = gymName;
+    data['gym_address'] = gymAddress;
+    data['gym_phone'] = gymPhone;
+    data['gym_email'] = gymEmail;
+    data['gym_photos'] = gymPhotos;
+    data['gym_price'] = gymPrice;
+    data['owner_id'] = ownerId;
     return data;
   }
 }

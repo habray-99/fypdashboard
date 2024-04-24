@@ -12,7 +12,7 @@ class AddMemberDialog extends StatefulWidget {
 }
 
 class _AddMemberDialogState extends State<AddMemberDialog> {
-  final _formKey = GlobalKey<FormState>();
+  final _formKey1 = GlobalKey<FormState>();
   final _memberNameController = TextEditingController();
   final _memberEmailController = TextEditingController();
   final _memberPhoneController = TextEditingController();
@@ -27,7 +27,7 @@ class _AddMemberDialogState extends State<AddMemberDialog> {
     return AlertDialog(
       title: const Text('Add New Member'),
       content: Form(
-        key: _formKey,
+        key: _formKey1,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -143,7 +143,7 @@ class _AddMemberDialogState extends State<AddMemberDialog> {
         ),
         ElevatedButton(
           onPressed: () {
-            if (_formKey.currentState!.validate()) {
+            if (_formKey1.currentState!.validate()) {
               // Add member logic here
               final member = GymMember(
                 memberName: _memberNameController.text,
